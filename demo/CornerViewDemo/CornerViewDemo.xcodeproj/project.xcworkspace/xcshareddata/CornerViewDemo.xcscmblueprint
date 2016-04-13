@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2540D868D6B154DCEEBFE7E1B0927E19E0F1D2AB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2540D868D6B154DCEEBFE7E1B0927E19E0F1D2AB" : 0,
+    "041A75B833F290D5C1BA7698A88C3F3E9FE4354D" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "DDF7353B-6D6A-4024-8543-B7F3858E90A2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2540D868D6B154DCEEBFE7E1B0927E19E0F1D2AB" : "MetalDemo\/",
+    "041A75B833F290D5C1BA7698A88C3F3E9FE4354D" : "MetalDemo\/CornerViewDemo\/CornerViewDemo\/objc\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "CornerViewDemo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "CornerViewDemo\/CornerViewDemo.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/RetVal\/objc4-532.2.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "041A75B833F290D5C1BA7698A88C3F3E9FE4354D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/1962449521\/Metalbrot.playground.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2540D868D6B154DCEEBFE7E1B0927E19E0F1D2AB"
+    }
+  ]
+}
