@@ -92,7 +92,7 @@
     dispatch_semaphore_t _semaphore_cornerRectPool;
 }
 
-- (instancetype)init {
+- (instancetype) init {
     if (self = [super init]) {
         _cornerPool = [NSMutableDictionary dictionary];
         _semaphore_cornerPool = dispatch_semaphore_create(1);
@@ -124,7 +124,7 @@
     }];
     
     UIView *superview = view.superview;
-    while (superview.backgroundColor == nil || CGColorEqualToColor(superview.backgroundColor.CGColor, [UIColor clearColor].CGColor)) {
+    while (superview.backgroundColor == nil || CGColorGetAlpha(superview.backgroundColor.CGColor) == 0 || superview.alpha == 0 || superview.opaque == 0 ) {
         if (!superview) {
             break;
         }
@@ -143,7 +143,7 @@
     CGFloat value1 = CGRectGetWidth(view.frame) - radius / 2.0;
     CGFloat value2 = radius / 2.0;
     CGFloat value3 = CGRectGetHeight(view.frame) - radius / 2.0;
-
+    
     
     if (corners & UIRectCornerTopLeft) {
         WHUCornerImageView *leftUpImageView = [[WHUCornerImageView alloc]initWithImage:arr[0]];
@@ -161,7 +161,7 @@
         WHUCornerImageView *rightDownImageView = [[WHUCornerImageView alloc]initWithImage:arr[2]];
         rightDownImageView.center = CGPointMake(value1, value3);
         [view addSubview:rightDownImageView];
-
+        
     }
     
     if (corners & UIRectCornerBottomLeft) {
@@ -215,7 +215,7 @@
             UIImage *img;
             radius *= [UIScreen mainScreen].scale ;
             CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-            CGContextRef contextRef = CGBitmapContextCreate(NULL, radius, radius, 8, 4 * radius, colorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
+            CGContextRef contextRef = CGBitmapContextCreate(NULL, radius, radius, 8, 0, colorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
             
             CGContextSetFillColorWithColor(contextRef, color.CGColor);
             CGContextMoveToPoint(contextRef, radius, 0);
@@ -250,11 +250,11 @@
 - (NSArray<UIImage *> *) p_cornersWithColor:(UIColor *)color radius:(CGFloat) radius {
     WHUCornerKey *key = [[WHUCornerKey alloc] initWithColor:color radius:radius];
     NSArray<UIImage *> *cornerRect_check = (NSArray<UIImage *> *)[self.cornerRectPool objectForKey:key];
-
+    
     if (!cornerRect_check) {
         dispatch_semaphore_wait(_semaphore_cornerRectPool, DISPATCH_TIME_FOREVER);
         NSArray<UIImage *> *cornerRect_reCheck = (NSArray<UIImage *> *)[self.cornerRectPool objectForKey:key];
-
+        
         if (!cornerRect_reCheck) {
             UIImage *cornerImage = [self p_cornerWithColor:color radius:radius];
             CGImageRef imageRef = cornerImage.CGImage;
@@ -278,7 +278,7 @@
             return cornerRect_reCheck;
         }
     } else {
-      return cornerRect_check;
+        return cornerRect_check;
     }
 }
 
