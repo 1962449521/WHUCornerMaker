@@ -78,8 +78,8 @@
 @interface WHUCornerMaker ()
 
 #pragma mark 实现享元模式所需的重用池
-@property (nonatomic, strong) NSMutableDictionary<WHUCornerKey *, UIImage *> *cornerPool;
-@property (nonatomic, strong) NSMutableDictionary<WHUCornerKey *, NSArray<UIImage *> *> *cornerRectPool;
+@property (nonatomic, strong) NSCache<WHUCornerKey *, UIImage *> *cornerPool;
+@property (nonatomic, strong) NSCache<WHUCornerKey *, NSArray<UIImage *> *> *cornerRectPool;
 
 #pragma mark 创建或获取可重用的圆角图片
 - (UIImage *) p_cornerWithColor:(UIColor *)color radius:(CGFloat) radius;
@@ -94,9 +94,9 @@
 
 - (instancetype) init {
     if (self = [super init]) {
-        _cornerPool = [NSMutableDictionary dictionary];
+        _cornerPool = [NSCache new];
         _semaphore_cornerPool = dispatch_semaphore_create(1);
-        _cornerRectPool = [NSMutableDictionary dictionary];
+        _cornerRectPool = [NSCache new];
         _semaphore_cornerRectPool = dispatch_semaphore_create(1);
     }
     return self;
@@ -203,6 +203,10 @@
 }
 
 #pragma mark 私有方法
+FOUNDATION_STATIC_INLINE NSUInteger NEPCacheCostForImage(UIImage *image) {
+    return image.size.height * image.size.width * image.scale * image.scale;
+}
+
 - (UIImage *) p_cornerWithColor:(UIColor *)color radius:(CGFloat) radius {
     WHUCornerKey *key = [[WHUCornerKey alloc] initWithColor:color radius:radius];
     UIImage *corner_check = [self.cornerPool objectForKey:key];
@@ -231,7 +235,7 @@
             CGColorSpaceRelease(colorSpace);
             CGImageRelease(imageCG);
             if (img) {
-                [self.cornerPool setObject:img forKey:key];
+                [self.cornerPool setObject:img forKey:key cost:NEPCacheCostForImage(img)];
                 dispatch_semaphore_signal(_semaphore_cornerPool);
                 return img;
             } else {
@@ -266,7 +270,7 @@
             
             if (leftUpImage && rightUpImage && rightDownImage && leftDownImage) {
                 NSArray *cornerRect = @[leftUpImage, rightUpImage, rightDownImage, leftDownImage];
-                [self.cornerRectPool setObject:cornerRect forKey:key];
+                [self.cornerRectPool setObject:cornerRect forKey:key cost:NEPCacheCostForImage(cornerImage) * 4];
                 dispatch_semaphore_signal(_semaphore_cornerRectPool);
                 return cornerRect;
             } else {
