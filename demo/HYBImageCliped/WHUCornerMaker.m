@@ -147,27 +147,92 @@
     
     if (corners & UIRectCornerTopLeft) {
         WHUCornerImageView *leftUpImageView = [[WHUCornerImageView alloc]initWithImage:arr[0]];
-        leftUpImageView.center = CGPointMake(value2, value2);
         [view addSubview:leftUpImageView];
+        leftUpImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        // align leftUpImageView from the left
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[leftUpImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftUpImageView)]];
+        
+        // align leftUpImageView from the top
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[leftUpImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftUpImageView)]];
+        
+        // width constraint
+        NSString *vflStr = [NSString stringWithFormat:@"H:[leftUpImageView(==%@)]", @(radius)];
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:vflStr options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftUpImageView)]];
+        
+        // height constraint
+        vflStr = [NSString stringWithFormat:@"V:[leftUpImageView(==%@)]", @(radius)];
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:vflStr options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftUpImageView)]];
+        
+        
+        //        leftUpImageView.center = CGPointMake(value2, value2);
     }
     
     if (corners & UIRectCornerTopRight) {
         WHUCornerImageView *rightUpImageView = [[WHUCornerImageView alloc]initWithImage:arr[1]];
-        rightUpImageView.center = CGPointMake(value1, value2);
+        //        rightUpImageView.center = CGPointMake(value1, value2);
         [view addSubview:rightUpImageView];
+        rightUpImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        
+        // align rightUpImageView from the right
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightUpImageView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightUpImageView)]];
+        
+        // align rightUpImageView from the top
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[rightUpImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightUpImageView)]];
+        
+        // width constraint
+        NSString *vflStr = [NSString stringWithFormat:@"H:[rightUpImageView(==%@)]", @(radius)];
+        
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:vflStr options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightUpImageView)]];
+        
+        // height constraint
+        vflStr = [NSString stringWithFormat:@"V:[rightUpImageView(==%@)]", @(radius)];
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:vflStr options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightUpImageView)]];
+        
     }
     
     if (corners & UIRectCornerBottomRight) {
         WHUCornerImageView *rightDownImageView = [[WHUCornerImageView alloc]initWithImage:arr[2]];
-        rightDownImageView.center = CGPointMake(value1, value3);
+        //        rightDownImageView.center = CGPointMake(value1, value3);
         [view addSubview:rightDownImageView];
+        rightDownImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        // align rightDownImageView from the right
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightDownImageView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightDownImageView)]];
+        
+        // align rightDownImageView from the bottom
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[rightDownImageView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightDownImageView)]];
+        
+        // width constraint
+        NSString *vflStr = [NSString stringWithFormat:@"H:[rightDownImageView(==%@)]", @(radius)];
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:vflStr options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightDownImageView)]];
+        
+        // height constraint
+        vflStr = [NSString stringWithFormat:@"V:[rightDownImageView(==%@)]", @(radius)];
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:vflStr options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightDownImageView)]];
+        
         
     }
     
     if (corners & UIRectCornerBottomLeft) {
         WHUCornerImageView *leftDownImageView = [[WHUCornerImageView alloc]initWithImage:arr[3]];
-        leftDownImageView.center = CGPointMake(value2, value3);
+        //        leftDownImageView.center = CGPointMake(value2, value3);
         [view addSubview:leftDownImageView];
+        leftDownImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        // align leftDownImageView from the left
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[leftDownImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftDownImageView)]];
+        
+        // align leftDownImageView from the bottom
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[leftDownImageView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftDownImageView)]];
+        
+        // width constraint
+        NSString *vflStr = [NSString stringWithFormat:@"H:[leftDownImageView(==%@)]", @(radius)];
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:vflStr options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftDownImageView)]];
+        
+        // height constraint
+        vflStr = [NSString stringWithFormat:@"V:[leftDownImageView(==%@)]", @(radius)];
+        [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:vflStr options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftDownImageView)]];
     }
 }
 
