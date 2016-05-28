@@ -2,8 +2,8 @@
 //  WHUCornerMasker.m
 //  CornerViewDemo
 //
-//  Created by 胡 帅 on 16/4/7.
-//  Copyright © 2016年 Disney. All rights reserved.
+//  Created by Mitty on 16/4/7.
+//  Copyright © 2016年 Mitty. All rights reserved.
 //
 
 #import "WHUCornerMaker.h"
@@ -130,6 +130,7 @@
         }
         superview = [superview superview];
     }
+    
     UIColor *color = superview.backgroundColor;
     if (!color) {
         color = defaultcolor;
@@ -139,11 +140,6 @@
     if ([arr count] < 4) {
         return;
     }
-    
-    CGFloat value1 = CGRectGetWidth(view.frame) - radius / 2.0;
-    CGFloat value2 = radius / 2.0;
-    CGFloat value3 = CGRectGetHeight(view.frame) - radius / 2.0;
-    
     
     if (corners & UIRectCornerTopLeft) {
         WHUCornerImageView *leftUpImageView = [[WHUCornerImageView alloc]initWithImage:arr[0]];
@@ -163,17 +159,12 @@
         // height constraint
         vflStr = [NSString stringWithFormat:@"V:[leftUpImageView(==%@)]", @(radius)];
         [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:vflStr options:0 metrics:nil views:NSDictionaryOfVariableBindings(leftUpImageView)]];
-        
-        
-        //        leftUpImageView.center = CGPointMake(value2, value2);
     }
     
     if (corners & UIRectCornerTopRight) {
         WHUCornerImageView *rightUpImageView = [[WHUCornerImageView alloc]initWithImage:arr[1]];
-        //        rightUpImageView.center = CGPointMake(value1, value2);
         [view addSubview:rightUpImageView];
         rightUpImageView.translatesAutoresizingMaskIntoConstraints = NO;
-        
         
         // align rightUpImageView from the right
         [view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[rightUpImageView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(rightUpImageView)]];
@@ -194,7 +185,6 @@
     
     if (corners & UIRectCornerBottomRight) {
         WHUCornerImageView *rightDownImageView = [[WHUCornerImageView alloc]initWithImage:arr[2]];
-        //        rightDownImageView.center = CGPointMake(value1, value3);
         [view addSubview:rightDownImageView];
         rightDownImageView.translatesAutoresizingMaskIntoConstraints = NO;
         
@@ -217,7 +207,6 @@
     
     if (corners & UIRectCornerBottomLeft) {
         WHUCornerImageView *leftDownImageView = [[WHUCornerImageView alloc]initWithImage:arr[3]];
-        //        leftDownImageView.center = CGPointMake(value2, value3);
         [view addSubview:leftDownImageView];
         leftDownImageView.translatesAutoresizingMaskIntoConstraints = NO;
         // align leftDownImageView from the left
@@ -268,7 +257,7 @@
 }
 
 #pragma mark 私有方法
-FOUNDATION_STATIC_INLINE NSUInteger NEPCacheCostForImage(UIImage *image) {
+FOUNDATION_STATIC_INLINE NSUInteger p_cacheCostForImage(UIImage *image) {
     return image.size.height * image.size.width * image.scale * image.scale;
 }
 
@@ -300,7 +289,7 @@ FOUNDATION_STATIC_INLINE NSUInteger NEPCacheCostForImage(UIImage *image) {
             CGColorSpaceRelease(colorSpace);
             CGImageRelease(imageCG);
             if (img) {
-                [self.cornerPool setObject:img forKey:key cost:NEPCacheCostForImage(img)];
+                [self.cornerPool setObject:img forKey:key cost:p_cacheCostForImage(img)];
                 dispatch_semaphore_signal(_semaphore_cornerPool);
                 return img;
             } else {
@@ -335,7 +324,7 @@ FOUNDATION_STATIC_INLINE NSUInteger NEPCacheCostForImage(UIImage *image) {
             
             if (leftUpImage && rightUpImage && rightDownImage && leftDownImage) {
                 NSArray *cornerRect = @[leftUpImage, rightUpImage, rightDownImage, leftDownImage];
-                [self.cornerRectPool setObject:cornerRect forKey:key cost:NEPCacheCostForImage(cornerImage) * 4];
+                [self.cornerRectPool setObject:cornerRect forKey:key cost:p_cacheCostForImage(cornerImage) * 4];
                 dispatch_semaphore_signal(_semaphore_cornerRectPool);
                 return cornerRect;
             } else {
